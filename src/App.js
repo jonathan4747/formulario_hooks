@@ -9,7 +9,36 @@ function App() {
   const [nuevoApellido,setNuevoApellido] = useState('');
   const [nuevoCorreo,setNuevoCorreo] = useState('');
   const [nuevoPassword,setNuevoPassword]=useState('');
-  const [nuevoConfirpassword,setNuevoConfirPassword]=useState('')
+  const [nuevoConfirpassword,setNuevoConfirPassword]=useState('');
+  const [nombreError, setNombreError] = useState("");
+  const [apellidoError, setApellidoError] = useState("");
+  const [correoError, setCorreoError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confiPasswordError, setconfiPasswordError] = useState("");
+
+  const ValNombre =(event)=>{
+    setNuevoNombre(event.target.value)
+    event.target.value.length<2 ? setNombreError("Al menos debe tener 2 caracteres"):setNombreError('');
+  }
+
+  const ValApellido =(event)=>{
+    setNuevoApellido(event.target.value)
+    event.target.value.length<2 ? setApellidoError("Al menos debe tener 2 caracteres"):setApellidoError('');
+  }
+
+  const ValCorreo =(event)=>{
+    setNuevoCorreo(event.target.value)
+    event.target.value.length<2 ? setCorreoError("Al menos debe tener 2 caracteres"):setCorreoError(''); 
+  }
+
+  const ValPassword =(event)=>{
+    setNuevoPassword(event.target.value)
+    event.target.value.length<8 ? setPasswordError("Al menos debe tener 8 caracteres"):setPasswordError('');
+  }
+  const ValConfPassword =(event)=>{
+    setNuevoConfirPassword(event.target.value)
+    event.target.value != nuevoPassword ? setconfiPasswordError("Coincidir los password"):setconfiPasswordError('');
+  }
 
   const agregarNuevoUsuario=(event)=>{
     event.preventDefault();
@@ -26,8 +55,8 @@ function App() {
     setNuevoCorreo('');
     setNuevoPassword('');
     setNuevoConfirPassword('');
-  }
-  
+
+  } 
   return (
     <div  className='usuario'>
       <form  onSubmit={agregarNuevoUsuario} >
@@ -37,7 +66,10 @@ function App() {
             </label>
             <input type="text" id='nombre' 
                    value={nuevoNombre} 
-                   onChange={(event)=> setNuevoNombre(event.target.value)}/>
+                   onChange={ValNombre}/>
+              {
+                nombreError ? <p style={{color:'red'}}>{nombreError}</p>:''
+              }
           </div>
           <div>
             <label htmlFor='apellido'>
@@ -45,7 +77,10 @@ function App() {
             </label>
             <input type="text" id='apellido'
                     value={nuevoApellido} 
-                    onChange={(event)=> setNuevoApellido(event.target.value)}/>
+                    onChange={ValApellido}/>
+                    {
+                      apellidoError ? <p  style={{color:'red'}}>{apellidoError}</p>:''
+                    }
           </div>
           <div>
             <label htmlFor='correo'>
@@ -53,7 +88,10 @@ function App() {
             </label>
             <input type="text" id='correo'
                    value={nuevoCorreo} 
-                   onChange={(event)=> setNuevoCorreo(event.target.value)}/>
+                   onChange={ValCorreo}/>
+                    {
+                      correoError ? <p  style={{color:'red'}}>{correoError}</p>:''
+                    }
           </div>
           <div>
             <label htmlFor='password'>
@@ -61,7 +99,9 @@ function App() {
             </label>
             <input type="password" id='password'
                    value={nuevoPassword} 
-                   onChange={(event)=> setNuevoPassword(event.target.value)}/>
+                   onChange={ValPassword}/>
+                   {passwordError ? <p  style={{color:'red'}}>{passwordError }</p>:''}
+                  {confiPasswordError ? <p  style={{color:'red'}}>{confiPasswordError}</p>:''}
           </div>
           <div>
             <label htmlFor='confirPassword'>
@@ -69,7 +109,7 @@ function App() {
             </label>
             <input type="password" id='confirPassword'
                    value={nuevoConfirpassword} 
-                   onChange={(event)=> setNuevoConfirPassword(event.target.value)}/>
+                   onChange={ValConfPassword}/>
           </div>
           <button type='submit'>
             Agregar
